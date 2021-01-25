@@ -2,21 +2,26 @@
 Projeto 2 da Disciplina MO436 (Topics in Machine Learning - Reinforcement Learning)
 
 
+#### Ms. Pacman com PPO
+
+|  id | batch_size | epochs |  ent_coef | lr | total_timesteps | Tempo (segundos) | Média | Desvio
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| 1 | 4 | 20 | 0.01 | 0.003 | 2000 | 42.38 | 310.0 | 0.0 |
+| 2 | 4 | 20 | 0.01 | 0.003 | 200000 | 4058.97 | 244.3 | 30.5 |
+| 3 | 4 | 20 | 0.01 | 0.00005 | 2000 | 121.47 | 492.0 | 334.3 |
+| 4 | 4 | 20 | 0.01 | 0.00005 | 200000 | 7887.28 | 469.6 | 283.3 |
+| 5 | 64 | 20 | 0.01 | 0.003 | 2000 | 37.03 | 60.0 | 0.0 | 
+| 6 | 64 | 20 | 0.01 | 0.003 | 200000 | 3477.92 | 390.0 | 0.0 |
+| 7 | 64 | 20 | 0.01 | 0.00005 | 2000 | 56.34 | 70.0 | 0.0 |
+| 8 | 64 | 20 | 0.01 | 0.00005 | 200000 | 4162.29 | 165.0 | 12.8 | 
+| 9 | 64 | 5 | 0.01 | 0.003 | 1000000 | 14407.51 | 264.6 | 31.1 |
+| 10 | 64 | 5 | 0.01 | 0.00005 | 1000000 | 16141.75 | 210.0 | 0.0 |
+| 11 | 4 | 5 | 0.01 | 0.00005 | 1000000 | 23019.05| 313.6 | 35.8 |
+| 12 | 4 | 20 | 0.1 | 0.0003 | 200000 | 3405.60 | 219.0 | 3.0 |
 
 
-Resultados usando Ms. Pacman:
 
-
-PPO
-
-
-
-
-DQN
-
-Para o experimento I, testamos alguns parametros (descritos na tabela abaixo) e os demais congelamos durante as simulações: learning_starts: 50000,train_freq:4
-gradient_steps:1,n_episodes_rollout:-1,optimize_memory_usage: FALSO,exploration_initial_eps:1,exploration_final_eps:0.05,max_grad_norm:10,'tensorboard_log: none, create_eval_env:falso, verbose:0, seed: 1278,device:auto
-_init_setup_model:verdadeiro.
+#### Ms. Pacman com DQN
 
 | id | lr | buffer_size | batch_size | tau | gamma ($\gamma$) | exploration_fraction | Tempo (segundos) | Média | Desvio
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
@@ -29,17 +34,73 @@ _init_setup_model:verdadeiro.
 | 7 | 0.00005 | 20000 | 64 | 0.5 | 0.2 | 0.1 | 16897.80 | 687.3 | 556.5|
 
 
-Resultados usando Cartpole:
+#### Cartpole com PPO
 
 
 
 
-PPO
+
+
+#### Cartpole com DQN
+
+Neste conjunto de experimentos utilizamos os mesmos parametros utilizados no experimento de DQN no ambiente Ms. Pacman (reportado acima).
+
+
+| id | lr | buffer_size | batch_size | gamma ($\gamma$) | exploration_fraction | Tempo (segundos) | Taxa de acerto (%) | Média | Desvio
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |  
+| 1 | 0.0005 | 10000 | 32 | 0.99 | 0.1 | 14836.51 | 100%| 500.0 | 0.0 |
+| 2 | 0.0005 | 10000 | 32 | 0.99 | 0.7 | 8353.22 | 100%| 500.0 | 0.0 |
+| 3 | 0.0005 | 10000 | 32 | 0.99 | 0.5 | 10979.57 | 0% | 195.9 | 11.1 |
+| 4 | 0.00005 | 10000 | 32 | 0.2 | 0.1 | 3002.20 | 0%| 9.5 | 1.3 |
+| 5 | 0.00005 | 20000 | 32 | 0.2 | 0.1 | 2961.93 | 0%|  69.4 | 41.6|
+| 6 | 0.00005 | 20000 | 64 | 0.2 | 0.1 | 3233.82 | 0%| 10.2 | 0.94|
+
+
+Testes utilizando principalmente a política lnMlpPolicy:
+|  id | Arquitetura | prioritized replay |  gamma | learning_rate | buffer_size | exploration_fraction| exploration_final_eps |exploration_initial_eps |target_network_update_freq| prioritized_replay_alpha |prioritized_replay_beta0|prioritized_replay_beta_iters| prioritized_replay_eps | learning_starts|batch_size|train_freq|total_timesteps|% de time steps|tempo (s)|Taxa de acerto (%)|Média|Desvio|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |--- | --- |--- | --- | --- | --- | --- | --- | --- | --- | --- |--- | --- |--- |
+| 01| mediumMLP | False | 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 32% |11.36|87% |441.0|152.6
+| 02| simpleMLP| False | 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |55.54|4% |199.0|52.0
+| 03| MlpPolicy| False | 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |58.05|0% |159.4|32.3
+| 04| LnMlpPolicy| False | 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 41% |26.62|100% |500.0|0.0
+| 05| LnMlpPolicy| True | 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 47% |49.30|98% |494.3|25.5
+| 06| LnMlpPolicy| False | 0.2 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |50.59|0% |12.0|5.7
+| 07| LnMlpPolicy| False | 0.99 | 0.000005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |45.2|0% |9.3|0.7
+| 08| LnMlpPolicy| False | 0.99 | 0.0005 | 5000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 32% |18.31|89% |458.8|117.2
+| 09| LnMlpPolicy| False | 0.99 | 0.0005 | 100000 |0.6|0.02|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |90.99|17% |240.6|107.3
+| 10| LnMlpPolicy| False | 0.99 | 0.0005 | 100000 |0.1|0.5|1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 33% |22.84|97% |489.5|57.1
+| 11| LnMlpPolicy| False | 0.99 | 0.0005 | 100000 |0.1|0.02|0.1|500 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 49% |40.82|100% |500.0|0.0
+| 12| LnMlpPolicy| False | 0.99 | 0.0005 | 100000 |0.1|0.02|1|2000 |0.6|0.4|None | 0.000001| 1000 |32 |1 | 10000 | 100% |67.76|0% |74.3|34.1
+| 13| LnMlpPolicy| True| 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |1|1|10 | 0.0001| 1000 |32 |1 | 10000 | 100% |70.44|0% |261.2|18.9
+| 14| LnMlpPolicy| False| 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 2000|32 |1 | 10000 | 42% |20.10|90% |468.6|81.4
+| 15| LnMlpPolicy| False| 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000|64 |1 | 10000 | 33% |19.90|96% |488.4|58.2
+| 16| LnMlpPolicy| False| 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000|32 |10 | 10000 | 100% |33.56|1% |82.0|70.1
+| 17| LnMlpPolicy| False| 0.99 | 0.0005 | 100000 |0.1|0.02|1|500 |0.6|0.4|None | 0.000001| 1000|32 |1 | 1000000 | 4.47% |376.18|98% |494.9|28.8
 
 
 
+Testes utlizando principalmente as políticas simpleMLP e mediumMLP:
 
-DQN
+
+|  id | Arquitetura | prioritized replay |  gamma | buffer_size | total_timesteps | % de time steps (Real)|Tempo (segundos) | Taxa de acerto (%)|Média | Desvio
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |--- | --- |
+|01| mediumMLP| False | 0.1 | 50000 | 1000000000 | % |  | % | | |
+|02| mediumMLP| False | 0.99 | 50000 | 1000000000 | % |  | % | | |
+|03| mediumMLP| False | 0.1 | 50000 | 10000 | % |  | % | | |
+|04| mediumMLP| False | 0.99 | 50000 | 10000 | % |  | % | | |
+|05| mediumMLP| True | 0.99 | 100000 | 10000 | % |  | % | | |
+|06| mediumMLP| True | 0.99 | 100000 | 1000000000 | % |  | % | | |
+|07| mediumMLP| True | 0.99 | 5000 | 10000 | % |  | % | | |
+|08| simpleMLP| False | 0.1 | 50000 | 1000000000 | 0.02% |  686.167342185974| 100% |0 |0 |
+|09| simpleMLP| False | 0.99 | 50000 | 1000000000 | 0.01% | 291.6148396 | 100% |500 |0 |
+|10| simpleMLP| False | 0.1 | 50000 | 10000 | 100% |28.8581965  | 0% |95.09 |70.5891061000208 |
+|11| simpleMLP| False | 0.99 | 50000 | 10000 | 100% |54.40282679  | 4% |199.08 | 52.00974524|
+|12| simpleMLP| True | 0.99 | 100000 | 10000 | 100% |54.40282679  | 4% |199.08 | 52.00974524|
+|13| simpleMLP| True | 0.1 | 100000 | 1000000000 | % |  | % | | |
+|14| simpleMLP| True | 0.99 | 5000 | 10000 | % |  | % | | |
+
+
+
 
 
 
