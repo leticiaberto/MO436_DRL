@@ -5,7 +5,7 @@ Projeto 2 da Disciplina MO436 (Topics in Machine Learning - Reinforcement Learni
 #### Ms. Pacman com PPO
 
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/vt5fpE0bzSY)
+[![Watch the video]()](https://youtu.be/AhG80Q2lDCw)
 
 #### Ms. Pacman com DQN
 
